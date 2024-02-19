@@ -1,0 +1,21 @@
+{
+  "name": "processosiagojulia",
+  "version": "0.0.1",
+  "description": "Gerenciador de processos com api do CNJ",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node --watch dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildb": "npx tsc --watch",
+    "buildf": "npx tsc --watch --project ./public/js/tsconfig.json"
+  },
+  "author": "Filipe Freitas Bermudes",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "express": "^4.17.21"
+  }
+}
