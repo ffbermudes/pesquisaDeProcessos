@@ -28,9 +28,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var path = __importStar(require("path"));
+var processoController_1 = __importDefault(require("../Controllers/processoController"));
 var routerProcessos = express_1.default.Router();
 routerProcessos.get('/cadastroNovoProcesso', function (req, res) {
-    res.sendFile(path.join(__dirname, "../views/paginas/cadastroProcessos.html"));
+    res.sendFile(path.join(__dirname, "../../paginas/cadastroProcessos.html"));
 });
-console.log(path.join(__dirname, "../views/paginas/cadastroProcessos.html"));
+routerProcessos.post('/verificarCadastroDoProcesso', function (req, res) {
+    var _a = req.body, nprocesso = _a.nprocesso, cliente = _a.cliente, alvoProcesso = _a.alvoProcesso, zuluDate = _a.zuluDate, status = _a.status;
+    var objtProcesso = {
+        nprocesso: nprocesso,
+        cliente: cliente,
+        alvoProcesso: alvoProcesso,
+        zuluDate: zuluDate,
+        status: status
+    };
+    var expectedKeys = ['nprocesso', 'cliente', 'alvoProcesso', 'zuluDate'];
+    var receivedKeys = Object.keys(req.body);
+    var allKeysValid = expectedKeys.every(function (key) { return receivedKeys.includes(key) && req.body[key] !== undefined; });
+    if (!allKeysValid) {
+        return res.status(400).send('Faltam chaves necessárias ou chaves estão indefinidas.');
+    }
+    var controllerProcessos = new processoController_1.default(objtProcesso);
+    res.json(controllerProcessos);
+});
 exports.default = routerProcessos;

@@ -1,18 +1,8 @@
-const dados = {
-    "query": {
-        "match": {
-            "numeroProcesso": "00109211620208080035"
-        }
-    }
-}
-
-fetch("https://api-publica.datajud.cnj.jus.br/api_publica_tjes/_search", {
-    method: "POST",
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'APIKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw=='
-    },
-    body: JSON.stringify(dados)
+fetch('./views/cardProcesso.html')
+.then(data => data.text())
+.then(dados => {
+    const divContainer: HTMLDivElement | null = document.querySelector('.container')
     
-}).then(dados => dados.json())
-.then(javascript => console.log(javascript))
+    if(divContainer !== null)
+        divContainer.innerHTML += dados
+})
