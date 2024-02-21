@@ -1,48 +1,42 @@
-import { Processo, Status } from '../Interfaces/allInterfaces'
-import fs from 'fs/promises';
-import fss from 'fs'
+import fs from 'fs'
 import path from 'path'
+import { Request, Response, json } from 'express'
 
-class ProcessoController implements Processo {
+class ProcessoController {
 
-    public nprocesso: number
-    public cliente: string
-    public alvoProcesso: string
-    public zuluDate: string
-    public status: Status
+    static cadastrarProcesso(req: Request, res: Response) {
+        const { nprocesso, cliente, alvoProcesso } = req.body
+        const variaveisDaRequisicao = { cliente, alvoProcesso }
+        const objetoDB = {}
 
-    constructor(objProcesso: Processo) {
-        this.nprocesso = objProcesso.nprocesso
-        this.cliente = objProcesso.cliente
-        this.alvoProcesso = objProcesso.alvoProcesso
-        this.zuluDate = objProcesso.zuluDate
-        this.status = 'ativo'
+        const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }))
 
-        this.init()
+        Object.defineProperty(objetoDB, nprocesso, {
+            value: variaveisDaRequisicao,
+            writable: true,
+            enumerable: true,
+            configurable: true
+        })
+
+        Object.assign(data, objetoDB)
+
+        const dadosJson = JSON.stringify(data, null, 2)
+
+        fs.writeFile(path.join(__dirname, '../../db/data.json'), dadosJson, (err) => {
+            if (err)
+                console.error(err)
+            else
+                console.log('Adicionado ao json')
+        })
+
+        res.redirect('/')
     }
 
-    private async init(): Promise<void> {
-        await this.writeDbJson()
+    static getProcessos(req: Request, res: Response) {
+        const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }))
+
+        res.json(data)
     }
-
-    private async writeDbJson(): Promise<void> {
-        try {
-
-            const filePath = path.join(__dirname, '../../db/data.json')
-
-            const data = await fs.readFile(filePath, { "encoding": 'utf-8' })
-            const dados = JSON.parse(data)
-
-            if (dados[this.nprocesso] === undefined) {
-                // logica para escrever json
-            }
-
-        } catch (error) {
-            console.error('Erro ao ler o arquivo:', error)
-        }
-
-    }
-
 }
 
 export default ProcessoController

@@ -1,8 +1,9 @@
-"use strict";
-fetch('./views/cardProcesso.html')
-    .then(data => data.text())
+import fetchCardProcesso from './fetchCardView.js';
+// dasads
+fetch('http://localhost:8087/processos/getProcessos')
+    .then(data => data.json())
     .then(dados => {
-    const divContainer = document.querySelector('.container');
-    if (divContainer !== null)
-        divContainer.innerHTML += dados;
+    const array1 = Object.values(dados);
+    fetchCardProcesso(array1);
 });
+//# sourceMappingURL=home.js.map
