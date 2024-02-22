@@ -35,4 +35,5 @@ routerProcessos.get('/cadastroNovoProcesso', function (req, res) {
 });
 routerProcessos.post('/verificarCadastroDoProcesso', function (req, res) { return processoController_1.default.cadastrarProcesso(req, res); });
 routerProcessos.get('/getProcessos', function (req, res) { return processoController_1.default.getProcessos(req, res); });
+routerProcessos.delete('/deleteProcessos', function (req, res) { return processoController_1.default.deleteProcesso(req, res); });
 exports.default = routerProcessos;

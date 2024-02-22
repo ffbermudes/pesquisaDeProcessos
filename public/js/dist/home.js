@@ -4,6 +4,6 @@ fetch('http://localhost:8087/processos/getProcessos')
     .then(data => data.json())
     .then(dados => {
     const array1 = Object.values(dados);
-    fetchCardProcesso(array1);
+    fetchCardProcesso(array1, dados);
 });
 //# sourceMappingURL=home.js.map

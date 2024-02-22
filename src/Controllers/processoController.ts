@@ -6,7 +6,7 @@ class ProcessoController {
 
     static cadastrarProcesso(req: Request, res: Response) {
         const { nprocesso, cliente, alvoProcesso } = req.body
-        const variaveisDaRequisicao = { cliente, alvoProcesso }
+        const variaveisDaRequisicao = { cliente, alvoProcesso, nprocesso }
         const objetoDB = {}
 
         const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }))
@@ -36,6 +36,13 @@ class ProcessoController {
         const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }))
 
         res.json(data)
+    }
+
+    static deleteProcesso(req: Request, res: Response) {
+        const processo:number = req.body.processo
+        console.log(processo)
+
+        res.end()
     }
 }
 

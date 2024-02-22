@@ -10,7 +10,7 @@ var ProcessoController = /** @class */ (function () {
     }
     ProcessoController.cadastrarProcesso = function (req, res) {
         var _a = req.body, nprocesso = _a.nprocesso, cliente = _a.cliente, alvoProcesso = _a.alvoProcesso;
-        var variaveisDaRequisicao = { cliente: cliente, alvoProcesso: alvoProcesso };
+        var variaveisDaRequisicao = { cliente: cliente, alvoProcesso: alvoProcesso, nprocesso: nprocesso };
         var objetoDB = {};
         var data = JSON.parse(fs_1.default.readFileSync(path_1.default.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }));
         Object.defineProperty(objetoDB, nprocesso, {
@@ -32,6 +32,11 @@ var ProcessoController = /** @class */ (function () {
     ProcessoController.getProcessos = function (req, res) {
         var data = JSON.parse(fs_1.default.readFileSync(path_1.default.join(__dirname, '../../db/data.json'), { encoding: 'utf8' }));
         res.json(data);
+    };
+    ProcessoController.deleteProcesso = function (req, res) {
+        var processo = req.body.processo;
+        console.log(processo);
+        res.end();
     };
     return ProcessoController;
 }());

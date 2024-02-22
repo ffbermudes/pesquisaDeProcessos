@@ -11,5 +11,5 @@ fetch('http://localhost:8087/processos/getProcessos')
     .then(dados => {
         const array1: Processo[] = Object.values(dados)
 
-        fetchCardProcesso(array1)
+        fetchCardProcesso(array1, dados)
     })
