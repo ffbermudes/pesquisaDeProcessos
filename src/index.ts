@@ -1,23 +1,26 @@
 import express, { Request, Response } from 'express'
-import * as path from 'path'
-import * as fs from 'fs'
-import RouterProcessos from './Routes/processosRouter'
+import RouterProcessos from './routes/processosRouter.js'
 import cors from 'cors'
+import path from 'path';
 
 const porta: number = 8087
 const app = express()
 
 app.use(cors())
-
-app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+app.use(express.static('public'));
 
-app.get('/', (req:Request, res:Response)=>{
-    const pagina: string = "home"
-    console.log(`Pag -> ${pagina} Page View`)
-    res.sendFile(path.join(__dirname, '../paginas/home.html'))
-})
+app.set('views', path.join(__dirname, "..\\src\\views"));
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+    res.render('pages/home');
+});
+
+app.get('/cadastro', (req, res) => {
+    res.render('pages/cadProcess');
+});
 
 app.use('/processos', RouterProcessos)
 
